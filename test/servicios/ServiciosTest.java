@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class ServiciosTest {
+class ServiciosTest extends SetUpTest{
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testGettersServicioIndividual() {
+		assertEquals("Entrada al cerro", entradaCerro.getNombre());
 	}
 
 }
