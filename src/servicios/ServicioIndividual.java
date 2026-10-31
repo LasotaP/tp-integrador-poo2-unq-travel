@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioIndividual implements Servicio {
-    private int id;
+    private String id;
     private String nombre;
     private String descripcion;
     private String proveedor;
     private String categoria;
     private double precioBase;
     private double descuento;
+    private Integer cupo;
     private List<Atributo<?>> atributos;
+    
 
     // CONSTRUCTOR
-    public ServicioIndividual(int id, String nombre, String descripcion, String proveedor, String cat, double precio, double descuento) {
+    public ServicioIndividual(String id, String nombre, String descripcion, String proveedor, String cat, double precio, double descuento, Integer cupo) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -23,6 +25,7 @@ public class ServicioIndividual implements Servicio {
         this.precioBase = precio;
         this.descuento = descuento;
         this.atributos = new ArrayList<>();
+        this.cupo = cupo;
 
         validarServicio();
     }
@@ -42,16 +45,34 @@ public class ServicioIndividual implements Servicio {
     public double getPrecioBaseCalculado() {
         return precioBase * (1 - (descuento / 100));
     }
-
+    @Override
+	public Integer cupoDisponible() {
+    	return this.cupo;
+	}
+    public boolean hayCupo(Integer cantidad) {
+    	return  this.cupo > cantidad;
+    }
     // HELPERS
     public void addAtributo(Atributo<?> atributo) {
         atributos.add(atributo);
     }
+    public void decrementarCupo(Integer cantidad) {
+    	if (!hayCupo(cantidad)) {
+	        throw new IllegalArgumentException("No hay cupo suficiente");
+	    }
+	    this.cupo -= cantidad; 
+    }
+    
+    @Override
+	public void aumentarCupo(Integer cantidad) {
+		this.cupo += cantidad;
+		
+	}
 
 
     // VALIDACION
     private void validarServicio(){
-        if(id < 0) { // REVISAR VALIDACION, PORQUE PUEDE HABER MAS COSAS QUE CHEQUEAR, COMO QUE NO YA NO EXISTA
+        if(id.isBlank()) { // REVISAR VALIDACION, PORQUE PUEDE HABER MAS COSAS QUE CHEQUEAR, COMO QUE NO YA NO EXISTA
             throw new IllegalArgumentException("Error: id invalido");
         }
         if(nombre == null || nombre.isBlank()) {
@@ -73,5 +94,7 @@ public class ServicioIndividual implements Servicio {
             throw new IllegalArgumentException("Error: descuento invalido");
         }
     }
+
+		
 }
 

@@ -1,21 +1,22 @@
 package servicios;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PaqueteTuristico implements Servicio {
     private String nombre;
     private String descripcion;
     private double descuento;
-    private List<Servicio> servicios;
+    private Integer cupo; 
+    private Map<Servicio, Integer> servicios;
 
     // CONSTRUCTOR
-    public PaqueteTuristico (String nombre, String descripcion, double descuento){
+    public PaqueteTuristico (String nombre, String descripcion, double descuento,Integer cupo){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descuento = descuento;
-        this.servicios = new ArrayList<>();
-
+        this.servicios = new HashMap<>();
+        this.cupo = cupo;
         validarPaquete();
     }
 
@@ -29,21 +30,45 @@ public class PaqueteTuristico implements Servicio {
     public String getDescripcion() {
         return descripcion;
     }
-
+    
+    @Override
+	public Integer cupoDisponible() {
+		return this.cupo;
+	}
     @Override
     public double getPrecioBaseCalculado() {
         return getPrecioBaseTotal() * (1 - (descuento / 100));
     }
 
     private double getPrecioBaseTotal() {
-        return servicios.stream()
-                        .mapToDouble(s -> s.getPrecioBaseCalculado())
+        return servicios.entrySet()
+        				.stream()
+                        .mapToDouble(s -> s.getKey().getPrecioBaseCalculado() * s.getValue())
                         .sum();
+   
     }
+    public boolean hayCupo(Integer cantidad) {
+    	return this.cupo > cantidad;
+    }
+    
+    public void decrementarCupo(Integer cantidad) {
+    	if (!hayCupo(cantidad)) {
+	        throw new IllegalArgumentException("No hay cupo suficiente");
+	    }
+	    this.cupo -= cantidad; 
+    }
+    
+    @Override
+	public void aumentarCupo(Integer cantidad) {
+		this.servicios.forEach((servicio,cant) -> servicio.decrementarCupo(cant * cantidad));
+		
+		this.cupo += cantidad;
+	}
 
     // HELPERS
-    public void addServicio(Servicio servicio){
-        servicios.add(servicio);
+    public void addServicio(Servicio servicio, Integer cantidad){
+        servicio.decrementarCupo(cantidad * this.cupoDisponible());
+    	servicios.put(servicio,cantidad);
     }
 
     // VALIDACION
