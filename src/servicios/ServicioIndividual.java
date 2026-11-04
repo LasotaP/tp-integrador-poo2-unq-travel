@@ -92,7 +92,6 @@ public class ServicioIndividual implements Servicio {
             throw new IllegalArgumentException("Error: descuento invalido");
         }
     }
-
-		
+    	
 }
 

@@ -48,28 +48,27 @@ public class PaqueteTuristico implements Servicio {
                         .sum();
    
     }
-    public boolean hayCupo(LocalDate fecha) {
-    	return this.cupo.hayDisponibilidad(fecha);
+    public boolean hayCupo(LocalDate fecha, Integer cantidad) {
+    	return this.cupo.hayDisponibilidad(fecha, cantidad);
     }
     
-    public void decrementarCupo(Integer cantidad) {
-    	if (!hayCupo(cantidad)) {
+    public void decrementarCupo(LocalDate fecha,Integer cantidad) {
+    	if (!hayCupo(fecha, cantidad)) {
 	        throw new IllegalArgumentException("No hay cupo suficiente");
 	    }
-	    this.cupo -= cantidad; 
+	    this.cupo.decrementar(fecha, cantidad); 
     }
     
     @Override
-	public void aumentarCupo(Integer cantidad) {
-		this.servicios.forEach((servicio,cant) -> servicio.decrementarCupo(cant * cantidad));
-		
-		this.cupo += cantidad;
+	public void aumentarCupo(LocalDate fecha, Integer cantidad) {
+		this.servicios.forEach((servicio,cant) -> servicio.decrementarCupo(fecha, cant * cantidad));
+		this.cupo.aumentar(fecha, cantidad); 
 	}
 
     // HELPERS
-    public void addServicio(Servicio servicio, Integer cantidad){
-        servicio.decrementarCupo(cantidad * this.cupoDisponible());
-    	servicios.put(servicio,cantidad);
+    public void addServicio(Servicio servicio,LocalDate fecha, Integer cantidad){
+        servicio.decrementarCupo(fecha, cantidad * this.cupoDisponible(fecha));
+    	servicios.put(servicio, cantidad); 	
     }
 
     // VALIDACION
