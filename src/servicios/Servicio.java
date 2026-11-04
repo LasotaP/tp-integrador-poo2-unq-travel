@@ -1,11 +1,13 @@
 package servicios;
 
+import java.time.*;
+
 public interface Servicio{
 	String getNombre();
     String getDescripcion();
     double getPrecioBaseCalculado();
-    Integer cupoDisponible();
-    boolean hayCupo(Integer cantidad);
-    void decrementarCupo(Integer cantidad);
-    void aumentarCupo(Integer cantidad);
+    Integer cupoDisponible(LocalDate fecha);
+    boolean hayCupo(LocalDate fecha,Integer cantidad);
+    void decrementarCupo(LocalDate fecha, Integer cantidad);
+    void aumentarCupo(LocalDate fecha,Integer cantidad);
 }

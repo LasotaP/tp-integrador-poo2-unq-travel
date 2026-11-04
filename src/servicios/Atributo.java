@@ -1,11 +1,12 @@
 package servicios;
 
-public class Atributo<T> {
-    private String nombre;
+public class Atributo {
+    
+	private TipoDeDato valor;
+	private String nombre;
     private boolean esObligatorio;
-    private T valor;
 
-    public Atributo(String nombre, boolean esObligatorio, T valor){
+    public Atributo(String nombre, boolean esObligatorio, TipoDeDato valor){
         this.nombre = nombre;
         this.esObligatorio = esObligatorio;
         this.valor = valor;

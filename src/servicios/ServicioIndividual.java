@@ -1,5 +1,6 @@
 package servicios;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,11 @@ public class ServicioIndividual implements Servicio {
     private String categoria;
     private double precioBase;
     private double descuento;
-    private Integer cupo;
-    private List<Atributo<?>> atributos;
+    private Cupo cupo;
+    private List<Atributo> atributos;
     
-
     // CONSTRUCTOR
-    public ServicioIndividual(String id, String nombre, String descripcion, String proveedor, String cat, double precio, double descuento, Integer cupo) {
+    public ServicioIndividual(String id, String nombre, String descripcion, String proveedor, String cat, double precio, double descuento, Cupo cupo) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -46,29 +46,27 @@ public class ServicioIndividual implements Servicio {
         return precioBase * (1 - (descuento / 100));
     }
     @Override
-	public Integer cupoDisponible() {
-    	return this.cupo;
+	public Integer cupoDisponible(LocalDate fecha) {
+    	return this.cupo.getDisponibilidad(fecha);
 	}
-    public boolean hayCupo(Integer cantidad) {
-    	return  this.cupo > cantidad;
+    public boolean hayCupo(LocalDate fecha,Integer cantidad) {
+    	return  this.cupo.hayDisponibilidad(fecha,cantidad);
     }
     // HELPERS
-    public void addAtributo(Atributo<?> atributo) {
+    public void addAtributo(Atributo atributo) {
         atributos.add(atributo);
     }
-    public void decrementarCupo(Integer cantidad) {
-    	if (!hayCupo(cantidad)) {
-	        throw new IllegalArgumentException("No hay cupo suficiente");
-	    }
-	    this.cupo -= cantidad; 
+    public void decrementarCupo(LocalDate fecha, Integer cantidad) {
+    	this.getCupo().decrementar(fecha,cantidad);
+    }
+    public void aumentarCupo(LocalDate fecha, Integer cantidad) {
+    	this.getCupo().aumentar(fecha, cantidad);
     }
     
-    @Override
-	public void aumentarCupo(Integer cantidad) {
-		this.cupo += cantidad;
-		
-	}
-
+    
+    public Cupo getCupo() {
+    	return this.cupo;
+    }
 
     // VALIDACION
     private void validarServicio(){

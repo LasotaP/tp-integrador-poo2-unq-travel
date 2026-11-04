@@ -1,5 +1,6 @@
 package servicios;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,11 +8,11 @@ public class PaqueteTuristico implements Servicio {
     private String nombre;
     private String descripcion;
     private double descuento;
-    private Integer cupo; 
+    private Cupo cupo; 
     private Map<Servicio, Integer> servicios;
 
     // CONSTRUCTOR
-    public PaqueteTuristico (String nombre, String descripcion, double descuento,Integer cupo){
+    public PaqueteTuristico (String nombre, String descripcion, double descuento,Cupo cupo){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descuento = descuento;
@@ -32,8 +33,8 @@ public class PaqueteTuristico implements Servicio {
     }
     
     @Override
-	public Integer cupoDisponible() {
-		return this.cupo;
+	public Integer cupoDisponible(LocalDate fecha) {
+		return this.cupo.getDisponibilidad(fecha);
 	}
     @Override
     public double getPrecioBaseCalculado() {
@@ -47,8 +48,8 @@ public class PaqueteTuristico implements Servicio {
                         .sum();
    
     }
-    public boolean hayCupo(Integer cantidad) {
-    	return this.cupo > cantidad;
+    public boolean hayCupo(LocalDate fecha) {
+    	return this.cupo.hayDisponibilidad(fecha);
     }
     
     public void decrementarCupo(Integer cantidad) {
