@@ -2,8 +2,8 @@ package servicios;
 
 public class Atributo {
     
-	private TipoDeDato valor;
 	private String nombre;
+	private TipoDeDato valor;
     private boolean esObligatorio;
 
     public Atributo(String nombre, boolean esObligatorio, TipoDeDato valor){

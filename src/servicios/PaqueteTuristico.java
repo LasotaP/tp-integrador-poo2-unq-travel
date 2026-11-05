@@ -1,22 +1,23 @@
 package servicios;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PaqueteTuristico implements Servicio {
     private String nombre;
     private String descripcion;
     private double descuento;
     private Cupo cupo; 
-    private Map<Servicio, Integer> servicios;
+    private List<Servicio> servicios; 
+    // tiene que tener fecha de inicio fecha de salida.
+    // Objeto calendario, para cada dia tiene un cupo. 
 
     // CONSTRUCTOR
     public PaqueteTuristico (String nombre, String descripcion, double descuento,Cupo cupo){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descuento = descuento;
-        this.servicios = new HashMap<>();
+        this.servicios = new ArrayList<>();
         this.cupo = cupo;
         validarPaquete();
     }
@@ -67,8 +68,8 @@ public class PaqueteTuristico implements Servicio {
 
     // HELPERS
     public void addServicio(Servicio servicio,LocalDate fecha, Integer cantidad){
-        servicio.decrementarCupo(fecha, cantidad * this.cupoDisponible(fecha));
-    	servicios.put(servicio, cantidad); 	
+        // esto va a pasar en la reserva servicio.decrementarCupo(fecha, cantidad * this.cupoDisponible(fecha)); //este hay que sacarlo 
+        servicios.add(servicio); 	
     }
 
     // VALIDACION

@@ -1,25 +1,28 @@
 package servicios.cicloDeVida;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import servicios.Servicio;
 
 public class Reserva {
 	private Estado estado;
-	private List<Servicio> servicios;
+	private List<Servicio> servicios; // crear nueva clase itemReserva
+	private List<LocalDate> diasDeReserva;
 	
-	public Reserva(Estado estado) {
+	
+	public Reserva(Estado estado,ArrayList<LocalDate> diasDeReserva) {
+		
 		this.estado = new SolicitudPendiente();
 		this.servicios = new ArrayList<Servicio>(); 
+		this.diasDeReserva = diasDeReserva;
+		
 		
 	}
 	
-	public void añadirServicios(Servicio servicio, Integer cantidad) {
-		//validar
-		//Si ya existia en el map el item que estoy agregando, recupero el stock con getOrDefault y le sumo la cantidad pasada por parametros
-		//si no existia getOrDefault te devuelve 0, y le sumo la cantidad. 
-		
-		this.servicios.add(servicio);
+
+	public void añadirServicios(Servicio servicio, LocalDate dia,Integer cupos) {
+		this.estado.addServicio(this,servicio,dia,cupos);
 		
 	}
 	public void quitarServicio(Servicio servicio) {
@@ -38,7 +41,7 @@ public class Reserva {
 	public void setEstado(Estado nuevoEstado) {
 		this.estado = nuevoEstado;
 	}
-
+	
 	/*public void validarCupo() {
 		servicios.forEach((servicio,cantidad)-> {
 			if (!servicio.hayCupo(cantidad)){
