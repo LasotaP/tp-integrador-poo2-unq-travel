@@ -63,8 +63,7 @@ public class ServicioIndividual implements Servicio {
     	this.getCupo().aumentar(fecha, cantidad);
     }
     
-    
-    public Cupo getCupo() {
+    private Cupo getCupo() {
     	return this.cupo;
     }
 

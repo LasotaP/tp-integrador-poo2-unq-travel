@@ -3,10 +3,16 @@ package servicios;
 import java.time.LocalDate;
 
 public class TipoFecha implements TipoDeDato {
+	
+	public LocalDate valor;
+	public TipoFecha(LocalDate valor) {
+		this.valor = valor;
+		esValido();
+	}
 
 	@Override
-	public boolean esValido(TipoDeDato dato) {
-		return LocalDate.class.isInstance(dato);
+	public boolean esValido() {
+		return valor != null;
 	}
 
 }
