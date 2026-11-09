@@ -1,33 +1,45 @@
 package servicios;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Collections;
+import java.util.HashMap;
+
+import java.util.Map;
+
 
 public class ServicioIndividual implements Servicio {
     private String id;
     private String nombre;
     private String descripcion;
     private String proveedor;
-    private String categoria;
+    private Categoria categoria;
     private double precioBase;
-    private double descuento;
     private Cupo cupo;
-    private List<Atributo> atributos;
+    private final Map<String, AtributoDinamico> atributosDinamicos;
+    private final double descuentoPromocional; // fraccion entre 0 y 1 (0.10 = 10 %)
     
     // CONSTRUCTOR
-    public ServicioIndividual(String id, String nombre, String descripcion, String proveedor, String cat, double precio, double descuento, Cupo cupo) {
+    public ServicioIndividual(String id, String nombre, String descripcion, String proveedor, Categoria categoria, double precioBase, 
+    		Cupo cupo, double descuentoPromocional) {
+        validarTexto(id, "id");
+        validarTexto(nombre, "nombre");
+        validarTexto(descripcion, "descripcion");
+        validarTexto(proveedor, "proveedor");
+        validarNoNulo(categoria, "categoria");
+        validarNoNulo(cupo, "cupo");
+        validarPositivo(precioBase, "precioBase");
+        validarFraccion(descuentoPromocional, "descuentoPromocional");
+
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.proveedor = proveedor;
-        this.categoria = cat;
-        this.precioBase = precio;
-        this.descuento = descuento;
-        this.atributos = new ArrayList<>();
+        this.categoria = categoria;
         this.cupo = cupo;
-
-        validarServicio();
+        this.precioBase = precioBase;
+        this.descuentoPromocional = descuentoPromocional;
+        this.atributosDinamicos = new HashMap<>();
     }
 
     // GETTERS
@@ -42,23 +54,35 @@ public class ServicioIndividual implements Servicio {
     }
 
     @Override
-    public double getPrecioBaseCalculado() {
-        return precioBase * (1 - (descuento / 100));
+    public double getPrecioFinal() {
+        return precioBase * (1.0 - descuentoPromocional);
     }
+    
     @Override
 	public Integer cupoDisponible(LocalDate fecha) {
     	return this.cupo.getDisponibilidad(fecha);
 	}
+    
+    @Override
     public boolean hayCupo(LocalDate fecha,Integer cantidad) {
     	return  this.cupo.hayDisponibilidad(fecha,cantidad);
     }
     // HELPERS
-    public void addAtributo(Atributo atributo) {
-        atributos.add(atributo);
+    
+    // Agrega el atributo con su valor. Si ya existe uno con ese nombre lo reemplaza.
+    public void agregarAtributoDinamico(AtributoDinamico atributo) {
+        if (atributo == null) {
+            throw new ServicioInvalidoException("El atributo no puede ser nulo");
+        }
+        atributosDinamicos.put(atributo.getNombre(), atributo);
     }
+    
+    @Override
     public void decrementarCupo(LocalDate fecha, Integer cantidad) {
     	this.getCupo().decrementar(fecha,cantidad);
     }
+    
+    @Override
     public void aumentarCupo(LocalDate fecha, Integer cantidad) {
     	this.getCupo().aumentar(fecha, cantidad);
     }
@@ -69,29 +93,62 @@ public class ServicioIndividual implements Servicio {
     }
 
     // VALIDACION
-    private void validarServicio(){
-        if(id.isBlank()) { // REVISAR VALIDACION, PORQUE PUEDE HABER MAS COSAS QUE CHEQUEAR, COMO QUE NO YA NO EXISTA
-            throw new IllegalArgumentException("Error: id invalido");
-        }
-        if(nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("Error: nombre invalido");
-        }
-        if(descripcion == null || descripcion.isBlank()) {
-            throw new IllegalArgumentException("Error: descripcion invalida");
-        }
-        if(proveedor == null || proveedor.isBlank()) {
-            throw new IllegalArgumentException("Error: proveedor invalido");
-        }
-        if(categoria == null || categoria.isBlank()) {
-            throw new IllegalArgumentException("Error: categoria invalida");
-        }
-        if(precioBase < 0.0) {
-            throw new IllegalArgumentException("Error: precio invalido");
-        }
-        if(descuento < 0 || descuento > 100) {
-            throw new IllegalArgumentException("Error: descuento invalido");
+    private void validarTexto(String valor, String campo) {
+        if (valor == null || valor.isBlank()) {
+            throw new ServicioInvalidoException("El campo " + campo + " es obligatorio");
         }
     }
+
+    private void validarNoNulo(Object valor, String campo) {
+        if (valor == null) {
+            throw new ServicioInvalidoException("El campo " + campo + " es obligatorio");
+        }
+    }
+
+    private void validarPositivo(double valor, String campo) {
+        if (valor <= 0) {
+            throw new ServicioInvalidoException("El campo " + campo + " debe ser positivo");
+        }
+    }
+
+    private void validarFraccion(double valor, String campo) {
+        if (valor < 0 || valor > 1) {
+            throw new ServicioInvalidoException("El campo " + campo + " debe estar entre 0 y 1");
+        }
+    }
+    
+    
+    @Override
+    public double getPrecioBase() {
+        return precioBase;
+    }
+
+    @Override
+    public double getDescuentoPromocional() {
+        return descuentoPromocional;
+    }
+
+    public Map<String, AtributoDinamico> getAtributosDinamicos() {
+        return Collections.unmodifiableMap(atributosDinamicos);
+    }
+
+    @Override
+    public boolean validarServicio() {
+        return atributosDinamicos.values().stream()
+                .allMatch(AtributoDinamico::esValido);
+    }
+
+	public String getId() {
+		return id;
+	}
+
+	public String getProveedor() {
+		return proveedor;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
     	
 }
 

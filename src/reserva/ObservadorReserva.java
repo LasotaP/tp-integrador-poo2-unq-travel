@@ -1,0 +1,10 @@
+package reserva;
+
+
+/*
+ Rol Observer. Se le informa cada cambio de estado de la reserva, con el estado anterior y el nuevo.
+ */
+public interface ObservadorReserva {
+
+    void estadoCambiado(Reserva reserva, Estado anterior, Estado nuevo);
+}

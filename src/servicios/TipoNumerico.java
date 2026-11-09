@@ -1,14 +1,12 @@
 package servicios;
 
-public class TipoNumerico implements TipoDeDato {
-
-	@Override
-	public boolean esValido(TipoDeDato dato) {
-		
-		return Number.class.isInstance(dato);
-	}
-	/*public boolean esFinito(TipoDeDato dato) {
-		 double numero = dato.doubleValue();
-		 return !Double.isNaN(numero);
-	}*/
+public class TipoNumerico implements TipoValor {
+    public boolean esConsistente(String valor) {
+        try {
+            Double.valueOf(valor);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

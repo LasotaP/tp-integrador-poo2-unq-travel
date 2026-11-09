@@ -1,4 +1,4 @@
-package servicios.cicloDeVida;
+package reserva;
 
 public class Cancelada extends Estado {
 
@@ -7,10 +7,10 @@ public class Cancelada extends Estado {
 		return "Reserva cancelada";
 	}
 	
-	@Override
-	public void registrar(Reserva reserva) {
-		
-	}
+    @Override
+    public CodigoEstado codigo() {
+        return CodigoEstado.EN_CHECKIN;
+    }   
 	
 	
 
