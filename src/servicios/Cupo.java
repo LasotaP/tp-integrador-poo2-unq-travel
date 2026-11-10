@@ -22,22 +22,25 @@ public class Cupo {
 		return this.getTotal(fecha) - this.getReservado(fecha);
 	}
 
+	public boolean hayDisponibilidad(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+		return fecIni.datesUntil(fecFin).allMatch(f -> hayDisponibilidadInidividual(f, cantidad));
+	}
 	
-	public boolean hayDisponibilidad(LocalDate fecha, Integer cantidad) {
+	public boolean hayDisponibilidadInidividual(LocalDate fecha, Integer cantidad) {
 		return this.getDisponibilidad(fecha) >= cantidad;
 	}
 	
-	
-	
-	public void decrementar(LocalDate fecha,Integer cantidad) {
-    	if (!hayDisponibilidad(fecha,cantidad)) {
+	public void reservar(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+    	if (!hayDisponibilidad(fecIni, fecFin,cantidad)) {
 	        throw new IllegalArgumentException("No hay cupo suficiente");
 	    }
-    	this.reservado.put(fecha, this.getReservado(fecha) + cantidad);
+		
+    	fecIni.datesUntil(fecFin).forEach(f -> reservado.merge(f, cantidad, Integer::sum));
+		
     }
     
-	public void aumentar(LocalDate fecha, Integer cantidad) {
-		this.total.put(fecha, this.getTotal(fecha) + cantidad);
+	public void restaurar(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+		fecIni.datesUntil(fecFin).forEach(f -> reservado.merge(f, -(cantidad), Integer::sum));
 		
 	}
 }

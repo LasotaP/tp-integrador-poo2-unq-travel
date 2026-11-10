@@ -64,8 +64,8 @@ public class ServicioIndividual implements Servicio {
 	}
     
     @Override
-    public boolean hayCupo(LocalDate fecha,Integer cantidad) {
-    	return  this.cupo.hayDisponibilidad(fecha,cantidad);
+    public boolean hayCupo(LocalDate fecIni, LocalDate fecFin,Integer cantidad) {
+    	return  this.cupo.hayDisponibilidad(fecIni,fecFin,cantidad);
     }
     // HELPERS
     
@@ -78,13 +78,13 @@ public class ServicioIndividual implements Servicio {
     }
     
     @Override
-    public void decrementarCupo(LocalDate fecha, Integer cantidad) {
-    	this.getCupo().decrementar(fecha,cantidad);
+    public void reservarCupo(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+    	this.getCupo().reservar(fecIni, fecFin ,cantidad);
     }
     
     @Override
-    public void aumentarCupo(LocalDate fecha, Integer cantidad) {
-    	this.getCupo().aumentar(fecha, cantidad);
+    public void restaurarCupo(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+    	this.getCupo().restaurar(fecIni, fecFin ,cantidad);
     }
     
     private Cupo getCupo() {

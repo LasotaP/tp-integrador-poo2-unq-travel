@@ -18,11 +18,11 @@ public abstract class Estado {
 	}
 	
 	
-    public void agregarServicio(Reserva reserva, Servicio servicio) {
+    public void agregarItemReserva(Reserva reserva, ItemReserva itemReserva) {
         throw operacionInvalida("agregar servicios");
     }
 
-    public void quitarServicio(Reserva reserva, Servicio servicio) {
+    public void quitarItemReserva(Reserva reserva, ItemReserva itemReserva) {
         throw operacionInvalida("quitar servicios");
     }
 

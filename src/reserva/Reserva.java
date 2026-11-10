@@ -1,49 +1,51 @@
 package reserva;
 
+import java.time.LocalDate;
 import java.util.*;
 
+import notificacion.comprobante.Voucher;
 import servicios.Servicio;
 
 public class Reserva {
 	private Estado estado;
-	private List<Servicio> servicios;
+	private List<ItemReserva> itemsReserva;
+	private Voucher voucherCredito;
     private final Cliente cliente;
     private final List<ObservadorReserva> observadores;
 	
 	public Reserva(Estado estado, Cliente cliente) {
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
 		this.estado = new SolicitudPendiente();
-		this.servicios = new ArrayList<Servicio>(); 
+		this.itemsReserva = new ArrayList<ItemReserva>(); 
         this.observadores = new ArrayList<>();
 		
 	}
 	
-	public void añadirServicios(Servicio servicio, Integer cantidad) {
-		//validar
-		//Si ya existia en el map el item que estoy agregando, recupero el stock con getOrDefault y le sumo la cantidad pasada por parametros
-		//si no existia getOrDefault te devuelve 0, y le sumo la cantidad. 
-		
-		this.servicios.add(servicio);
-		
+	public void addItemReserva(ItemReserva itemReserva) {
+		this.itemsReserva.add(itemReserva);
 	}
-	public void quitarServicio(Servicio servicio) {
-		if(servicios.isEmpty()) {
+	 
+	public void quitarItemReserva(ItemReserva itemReserva) {
+		if(this.itemsReserva.isEmpty()) {
 			throw new IllegalArgumentException("No se pueden quitar servicios: la reserva actual está vacía."); 
 		}
 		
-		if(!servicios.contains(servicio)) {
+		if(!this.itemsReserva.contains(itemReserva)) {
 			throw new IllegalArgumentException("El servicio que intentás remover no se encuentra en esta reserva.");			
 		}
 		
 		estado.validarSiPuedoAgregarOQuitarServicios();
-		this.servicios.remove(servicio);
+		this.itemsReserva.remove(itemReserva);
 	}
 	
 	public void setEstado(Estado nuevoEstado) {
 		this.estado = nuevoEstado;
 	}
 
-
+	public void reservarServicios() {
+		this.itemsReserva.stream()
+						 .forEach(i -> i.reservarCupo());
+	}
 
 	/*public void validarCupo() {
 		servicios.forEach((servicio,cantidad)-> {
@@ -52,10 +54,6 @@ public class Reserva {
 			}
 		});
 	
-	}
-
-	public void decrementarCupo() {
-		servicios.forEach((servicio,cantidad) -> servicio.decrementarCupo(cantidad));
 	}
 
 	public void restaurarCupos() {
@@ -106,23 +104,17 @@ public class Reserva {
         observadores.forEach(observador -> observador.estadoCambiado(this, anterior, nuevoEstado));
     }
     
-    void registrarServicio(Servicio servicio) {
-        servicios.add(Objects.requireNonNull(servicio, "El item no puede ser nulo"));
-    }
-
-    void descartarServicio(Servicio servicio) {
-        servicios.remove(servicio);
-    }
-
-	public void restaurarCupos() {
-		// TODO Auto-generated method stub
-		
+	public void restaurarServicios() {
+		this.itemsReserva.stream()
+		 				 .forEach(i -> i.restaurarCupo());		
 	}
 	
-    public List<Servicio> getServicios() {
-        return Collections.unmodifiableList(servicios);
+    public List<ItemReserva> getItemsReserva() {
+        return Collections.unmodifiableList(itemsReserva);
     }
 	
-	
+	public void generarVoucher() {
+		//new Voucher(LocalDate.now(),cliente,itemsReserva, itemsReserva.stream().max(fecFin));
+	}
 	
 }

@@ -51,22 +51,22 @@ public class PaqueteTuristico implements Servicio {
     }
     
     @Override
-    public boolean hayCupo(LocalDate fecha, Integer cantidad) {
+    public boolean hayCupo(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
         return !servicios.isEmpty()
-                && servicios.stream().allMatch(s -> s.hayCupo(fecha, cantidad));
+                && servicios.stream().allMatch(s -> s.hayCupo(fecIni, fecFin, cantidad));
     }
     
     @Override
-    public void decrementarCupo(LocalDate fecha, Integer cantidad) {
-        if (!hayCupo(fecha, cantidad)) {
+    public void reservarCupo(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+        if (!hayCupo(fecIni, fecFin, cantidad)) {
             throw new IllegalArgumentException("No hay cupo suficiente");
         }
-        servicios.forEach(s -> s.decrementarCupo(fecha, cantidad));
+        servicios.forEach(s -> s.reservarCupo(fecIni, fecFin, cantidad));
     }
     
     @Override
-    public void aumentarCupo(LocalDate fecha, Integer cantidad) {
-        servicios.forEach(s -> s.aumentarCupo(fecha, cantidad));
+    public void restaurarCupo(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
+        servicios.forEach(s -> s.restaurarCupo(fecIni, fecFin, cantidad));
     }
 
     // HELPERS

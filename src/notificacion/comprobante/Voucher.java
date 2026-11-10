@@ -5,11 +5,15 @@ import java.util.List;
 
 import servicios.Servicio;
 import reserva.Cliente;
+import reserva.ItemReserva;
 
 public class Voucher extends Comprobante {
+	
+	private LocalDate fecFin;
 
-    public Voucher(String numero, LocalDate fecha, Cliente cliente, List<Servicio> servicios) {
-        super(numero, fecha, cliente);
+    public Voucher(LocalDate fecha, Cliente cliente, List<ItemReserva> itemReserva, LocalDate fecFin) {
+        super(fecha, cliente);
+        this.fecFin = fecFin;
     }
 }
 
