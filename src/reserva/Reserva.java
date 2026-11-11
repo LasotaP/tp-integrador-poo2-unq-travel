@@ -5,18 +5,20 @@ import java.util.*;
 
 import notificacion.comprobante.Comprobante;
 import notificacion.comprobante.Voucher;
-import reserva.metodoTraslado.Traslado;
+import reserva.metodoTraslado.MetodoTraslado;
+import servicios.Direccion;
 import servicios.Servicio;
+import servicios.ServicioIndividual;
 
 public class Reserva {
 	private Estado estado;
 	private List<ItemReserva> itemsReserva;
 	private List<Comprobante> comprobantes;
-	private Traslado metodoTraslado;
+	private MetodoTraslado metodoTraslado;
     private final Cliente cliente;
     private final List<ObservadorReserva> observadores;
 	
-	public Reserva(Estado estado, Cliente cliente) {
+	public Reserva(Estado estado, Cliente cliente, Direccion direccion) {
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
 		this.estado = new SolicitudPendiente();
 		this.itemsReserva = new ArrayList<ItemReserva>(); 
@@ -118,17 +120,17 @@ public class Reserva {
     }
 	
 	
-	public double getCostoTotal() {
+	public double getCostoReserva() {
 		return itemsReserva.stream()
 						   .mapToDouble(i -> i.costoTotalaItem())
 						   .sum();
 	}
 	
-	public Integer getCantidadPasajeros() { // Pido la cantidad maxima de pasajeros porque entiendo que es la cantidad que estan de "vacaciones". 
+	public Integer getCantidadPasajeros(ServicioIndividual servicio) { // Pido la cantidad maxima de pasajeros porque entiendo que es la cantidad que estan de "vacaciones". 
 		return getItemsReserva().stream()
+								.filter(i -> i.getServicio() == servicio)
 								.mapToInt(ItemReserva::getCantidadPasajeros)
-								.max()
-								.orElse(0);
+								.sum();
 	}
 	
 	public LocalDate getFechaFinReserva() {
@@ -144,6 +146,10 @@ public class Reserva {
 						   		.filter(i -> i.getFechaInicio() != null && !i.getFechaInicio().isBefore(LocalDate.now()))
 						   		.mapToDouble(ItemReserva::costoTotalaItem)
 						   		.sum();
+	}
+
+	public double getCostoTotal() {
+		return getCostoReserva() + metodoTraslado.getCostoTraslado(this);
 	}
 	
 }

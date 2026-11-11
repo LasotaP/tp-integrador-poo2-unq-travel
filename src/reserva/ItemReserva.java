@@ -31,6 +31,10 @@ public class ItemReserva {
 		return servicio.getPrecioFinal() * this.cantidad;
 	}
 	
+	public Servicio getServicio() {
+		return this.servicio;
+	}
+	
 	public Integer getCantidadPasajeros() {
 		return cantidad;
 	}

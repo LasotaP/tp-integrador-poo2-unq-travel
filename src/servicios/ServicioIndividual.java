@@ -16,6 +16,7 @@ public class ServicioIndividual implements Servicio {
     private Categoria categoria;
     private double precioBase;
     private Cupo cupo;
+    private Direccion direccion;
     private final Map<String, AtributoDinamico> atributosDinamicos;
     private final double descuentoPromocional; // fraccion entre 0 y 1 (0.10 = 10 %)
     
@@ -147,6 +148,10 @@ public class ServicioIndividual implements Servicio {
 
 	public Categoria getCategoria() {
 		return categoria;
+	}
+	
+	public Direccion getDireccion() {
+		return this.direccion;
 	}
     	
 }
