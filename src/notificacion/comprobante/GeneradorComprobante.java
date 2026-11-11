@@ -36,7 +36,7 @@ public class GeneradorComprobante implements ObservadorReserva {
     private void generar(Reserva reserva) {
         secuencia++;
         LocalDate fecha = LocalDate.now(reloj);
-        registro.registrar(new Factura("FAC-" + secuencia, fecha, reserva.getCliente(), reserva.getServicios()));
-        registro.registrar(new Voucher("VOU-" + secuencia, fecha, reserva.getCliente(), reserva.getServicios()));
+        registro.registrar(new Factura(fecha, reserva.getCliente(), reserva.getItemsReserva()));
+        registro.registrar(new Voucher("VOU-" + secuencia, fecha, reserva.getCliente(), reserva.getItemsReserva()));
     }
 }

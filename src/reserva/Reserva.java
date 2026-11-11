@@ -4,10 +4,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 import notificacion.comprobante.Comprobante;
-import notificacion.comprobante.Voucher;
 import reserva.metodoTraslado.MetodoTraslado;
 import servicios.Direccion;
-import servicios.Servicio;
 import servicios.ServicioIndividual;
 
 public class Reserva {
@@ -150,6 +148,9 @@ public class Reserva {
 
 	public double getCostoTotal() {
 		return getCostoReserva() + metodoTraslado.getCostoTraslado(this);
+	}
+	public void setMetodoDeTraslado(MetodoTraslado metodo) {
+		this.metodoTraslado = metodo;
 	}
 	
 }

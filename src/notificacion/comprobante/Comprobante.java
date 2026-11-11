@@ -17,7 +17,7 @@ public abstract class Comprobante {
     private double monto;
 
 
-    protected Comprobante(LocalDate fecha, Cliente cliente, double monto) {
+    public Comprobante(LocalDate fecha, Cliente cliente, double monto) {
         this.fecha = Objects.requireNonNull(fecha, "La fecha no puede ser nula");
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
         this.itemsReserva = new ArrayList<>();
