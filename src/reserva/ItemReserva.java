@@ -26,4 +26,20 @@ public class ItemReserva {
 	public void restaurarCupo() {
 		servicio.restaurarCupo(fecIni, fecFin, cantidad);
 	}
+	
+	public double costoTotalaItem() {
+		return servicio.getPrecioFinal() * this.cantidad;
+	}
+	
+	public Integer getCantidadPasajeros() {
+		return cantidad;
+	}
+	
+	public LocalDate getFechaFin() {
+		return this.fecFin;
+	}
+	
+	public LocalDate getFechaInicio() {
+		return this.fecIni;
+	}
 }

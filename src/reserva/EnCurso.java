@@ -1,5 +1,10 @@
 package reserva;
 
+import java.time.LocalDate;
+
+import notificacion.comprobante.Voucher;
+
+
 public class EnCurso extends Estado {
 
     @Override
@@ -9,8 +14,7 @@ public class EnCurso extends Estado {
 
     @Override
     public void cancelar(Reserva reserva) {
-    	// SE TIENE QUE REMBOLSAR SOLO LOS COSTOS DE LOS SERVICOS, DESPUES DE LA FECHA DE HOY (DEL ITTEM DE RESERVA EN CUESTION)
-    	
+    	reserva.addComprobante(new Voucher(LocalDate.now(), reserva.getCliente(), reserva.getItemsReserva(), reserva.getRembolso() , reserva.getFechaFinReserva()));    	
         reserva.cambiarEstado(new Cancelada());
     }
 

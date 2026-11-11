@@ -1,4 +1,4 @@
-package notificacion;
+package reserva.notificacion;
 
 import java.util.EnumSet;
 import java.util.Objects;

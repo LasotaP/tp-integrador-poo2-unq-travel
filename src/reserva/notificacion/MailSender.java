@@ -1,4 +1,4 @@
-package notificacion;
+package reserva.notificacion;
 
 public interface MailSender {
 

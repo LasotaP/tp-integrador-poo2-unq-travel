@@ -52,5 +52,4 @@ public abstract class Estado {
         return new OperacionInvalidaException(operacion, codigo().name());
     }
 
-
 }

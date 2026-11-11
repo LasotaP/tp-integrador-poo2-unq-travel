@@ -1,5 +1,8 @@
 package reserva;
 
+import java.time.LocalDate;
+
+import notificacion.comprobante.Voucher;
 
 public class EnCheckIn extends Estado {
 
@@ -17,9 +20,7 @@ public class EnCheckIn extends Estado {
     @Override
     public void cancelar(Reserva reserva) {
     	reserva.restaurarServicios();
-    	reserva.generarVoucher();
-    
-    	// SE TIENE QUE REMBOLSAR EL COSTO TOTAL DE LOS SERVICIOS Y DE LAS TASAS
+    	reserva.addComprobante(new Voucher(LocalDate.now(),reserva.getCliente(),reserva.getItemsReserva(), reserva.getCostoTotal()));
     	
         reserva.cambiarEstado(new Cancelada());
     }
@@ -27,5 +28,6 @@ public class EnCheckIn extends Estado {
     @Override
     public CodigoEstado codigo() {
         return CodigoEstado.EN_CHECKIN;
-    }   
+    }
+    
 }

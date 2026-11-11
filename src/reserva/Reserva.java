@@ -3,13 +3,16 @@ package reserva;
 import java.time.LocalDate;
 import java.util.*;
 
+import notificacion.comprobante.Comprobante;
 import notificacion.comprobante.Voucher;
+import reserva.metodoTraslado.Traslado;
 import servicios.Servicio;
 
 public class Reserva {
 	private Estado estado;
 	private List<ItemReserva> itemsReserva;
-	private Voucher voucherCredito;
+	private List<Comprobante> comprobantes;
+	private Traslado metodoTraslado;
     private final Cliente cliente;
     private final List<ObservadorReserva> observadores;
 	
@@ -17,6 +20,7 @@ public class Reserva {
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
 		this.estado = new SolicitudPendiente();
 		this.itemsReserva = new ArrayList<ItemReserva>(); 
+		this.comprobantes = new ArrayList<Comprobante>();
         this.observadores = new ArrayList<>();
 		
 	}
@@ -46,6 +50,10 @@ public class Reserva {
 		this.itemsReserva.stream()
 						 .forEach(i -> i.reservarCupo());
 	}
+	
+	public void addComprobante(Comprobante comprobante) {
+		this.comprobantes.add(comprobante);
+	}
 
 	/*public void validarCupo() {
 		servicios.forEach((servicio,cantidad)-> {
@@ -54,10 +62,6 @@ public class Reserva {
 			}
 		});
 	
-	}
-
-	public void restaurarCupos() {
-		servicios.forEach((servicio,cantidad) -> servicio.aumentarCupo(cantidad));
 	}
 	*/
 	
@@ -113,8 +117,33 @@ public class Reserva {
         return Collections.unmodifiableList(itemsReserva);
     }
 	
-	public void generarVoucher() {
-		//new Voucher(LocalDate.now(),cliente,itemsReserva, itemsReserva.stream().max(fecFin));
+	
+	public double getCostoTotal() {
+		return itemsReserva.stream()
+						   .mapToDouble(i -> i.costoTotalaItem())
+						   .sum();
+	}
+	
+	public Integer getCantidadPasajeros() { // Pido la cantidad maxima de pasajeros porque entiendo que es la cantidad que estan de "vacaciones". 
+		return getItemsReserva().stream()
+								.mapToInt(ItemReserva::getCantidadPasajeros)
+								.max()
+								.orElse(0);
+	}
+	
+	public LocalDate getFechaFinReserva() {
+		return this.itemsReserva.stream()
+								.map(ItemReserva::getFechaFin)
+								.max(LocalDate::compareTo)
+								.orElse(null);
+								
+	}
+	
+	public double getRembolso() {
+		return this.itemsReserva.stream()
+						   		.filter(i -> i.getFechaInicio() != null && !i.getFechaInicio().isBefore(LocalDate.now()))
+						   		.mapToDouble(ItemReserva::costoTotalaItem)
+						   		.sum();
 	}
 	
 }

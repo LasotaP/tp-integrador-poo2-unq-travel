@@ -14,12 +14,15 @@ public abstract class Comprobante {
     private final LocalDate fecha;
     private final Cliente cliente;
     private final List<ItemReserva> itemsReserva;
+    private double monto;
 
 
-    protected Comprobante(LocalDate fecha, Cliente cliente) {
+    protected Comprobante(LocalDate fecha, Cliente cliente, double monto) {
         this.fecha = Objects.requireNonNull(fecha, "La fecha no puede ser nula");
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
         this.itemsReserva = new ArrayList<>();
+        this.monto = monto;
+        
     }
 
     public LocalDate getFecha() { return fecha; }
