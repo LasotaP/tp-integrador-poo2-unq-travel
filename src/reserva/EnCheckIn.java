@@ -6,11 +6,6 @@ import notificacion.comprobante.Voucher;
 
 public class EnCheckIn extends Estado {
 
-	@Override
-	public String getEstado() {
-		return "Reserva registrada";
-	}
-	
 
     @Override
     public void iniciarViaje(Reserva reserva) {
@@ -20,7 +15,7 @@ public class EnCheckIn extends Estado {
     @Override
     public void cancelar(Reserva reserva) {
     	reserva.restaurarServicios();
-    	reserva.addComprobante(new Voucher(LocalDate.now(),reserva.getCliente(),reserva.getItemsReserva(), reserva.getCostoTotal()));
+    	reserva.addComprobante(new Voucher(reserva.getNumeroReserva(), LocalDate.now(),reserva.getCliente(),reserva.getItemsReserva(), reserva.getCostoTotal()));
     	
         reserva.cambiarEstado(new Cancelada());
     }

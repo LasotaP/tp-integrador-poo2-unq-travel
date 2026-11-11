@@ -15,17 +15,20 @@ public class Reserva {
 	private MetodoTraslado metodoTraslado;
     private final Cliente cliente;
     private final List<ObservadorReserva> observadores;
+    private String numeroReserva;
 	
-	public Reserva(Estado estado, Cliente cliente, Direccion direccion) {
+	public Reserva(Estado estado, Cliente cliente, Direccion direccion,String numeroReserva) {
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
 		this.estado = new SolicitudPendiente();
 		this.itemsReserva = new ArrayList<ItemReserva>(); 
 		this.comprobantes = new ArrayList<Comprobante>();
         this.observadores = new ArrayList<>();
+        this.numeroReserva = numeroReserva;
 		
 	}
 	
 	public void addItemReserva(ItemReserva itemReserva) {
+		estado.validarSiPuedoAgregarOQuitarItemReserva();
 		this.itemsReserva.add(itemReserva);
 	}
 	 
@@ -38,7 +41,7 @@ public class Reserva {
 			throw new IllegalArgumentException("El servicio que intentás remover no se encuentra en esta reserva.");			
 		}
 		
-		estado.validarSiPuedoAgregarOQuitarServicios();
+		estado.validarSiPuedoAgregarOQuitarItemReserva();
 		this.itemsReserva.remove(itemReserva);
 	}
 	
@@ -105,7 +108,7 @@ public class Reserva {
     void cambiarEstado(Estado nuevoEstado) {
         Estado anterior = this.estado;
         this.estado = Objects.requireNonNull(nuevoEstado, "El estado no puede ser nulo");
-        observadores.forEach(observador -> observador.estadoCambiado(this, anterior, nuevoEstado));
+        observadores.forEach(observador -> observador.notificar(this, anterior, nuevoEstado));
     }
     
 	public void restaurarServicios() {
@@ -151,6 +154,10 @@ public class Reserva {
 	}
 	public void setMetodoDeTraslado(MetodoTraslado metodo) {
 		this.metodoTraslado = metodo;
+	}
+
+	public String getNumeroReserva() {
+		return numeroReserva;
 	}
 	
 }

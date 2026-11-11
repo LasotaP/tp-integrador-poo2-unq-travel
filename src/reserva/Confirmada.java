@@ -2,10 +2,6 @@ package reserva;
 
 public class Confirmada extends Estado {
 
-	@Override
-	public String getEstado() {
-		return "Reserva confirmada/pagada";
-	}
 	
 	@Override
 	public void hacerCheckIn(Reserva reserva) {

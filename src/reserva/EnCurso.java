@@ -14,7 +14,7 @@ public class EnCurso extends Estado {
 
     @Override
     public void cancelar(Reserva reserva) {
-    	reserva.addComprobante(new Voucher(LocalDate.now(), reserva.getCliente(), reserva.getItemsReserva(), reserva.getRembolso() , reserva.getFechaFinReserva()));    	
+    	reserva.addComprobante(new Voucher(reserva.getNumeroReserva(), LocalDate.now(), reserva.getCliente(), reserva.getItemsReserva(), reserva.getRembolso() , reserva.getFechaFinReserva()));    	
         reserva.cambiarEstado(new Cancelada());
     }
 
@@ -23,8 +23,5 @@ public class EnCurso extends Estado {
         return CodigoEstado.EN_CURSO;
     }
 
-	@Override
-	public String getEstado() {
-		return "Reserva en curso";
-	}
+
 }

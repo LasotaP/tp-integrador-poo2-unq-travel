@@ -6,5 +6,5 @@ package reserva;
  */
 public interface ObservadorReserva {
 
-    void estadoCambiado(Reserva reserva, Estado anterior, Estado nuevo);
+    void notificar(Reserva reserva, Estado anterior, Estado nuevo);
 }

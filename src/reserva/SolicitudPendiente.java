@@ -1,14 +1,9 @@
 package reserva;
 
-import servicios.Servicio;
 
 public class SolicitudPendiente extends Estado{
 	
-	@Override
-	public String getEstado() {
-		return "Solicitud pendiente";
-	}
-	
+
 	/*@Override
 	public void confirmar(Reserva reserva) {
 		reserva.validarCupo();
@@ -43,6 +38,9 @@ public class SolicitudPendiente extends Estado{
     public CodigoEstado codigo() {
         return CodigoEstado.SOLICITUD_PENDIENTE;
     }
+    
+    @Override
+    	public void validarSiPuedoAgregarOQuitarItemReserva() {}
 }
 	
 	

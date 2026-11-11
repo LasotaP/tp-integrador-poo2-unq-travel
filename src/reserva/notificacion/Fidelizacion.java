@@ -11,7 +11,7 @@ import reserva.ObservadorReserva;
 import reserva.Reserva;
 
 
-/** ConcreteObserver (Club de Viajeros): ante una cancelacion, envia un cupon del 5 %. */
+/** ConcreteObserver: ante una cancelacion, envia un cupon del 5 %. */
 public class Fidelizacion implements ObservadorReserva {
 
     private static final Set<CodigoEstado> ESTADOS_QUE_PREMIAN = EnumSet.of(CodigoEstado.CANCELADA);
@@ -23,10 +23,11 @@ public class Fidelizacion implements ObservadorReserva {
     }
 
     @Override
-    public void estadoCambiado(Reserva reserva, Estado anterior, Estado nuevo) {
-        Optional.of(nuevo.codigo())
-                .filter(ESTADOS_QUE_PREMIAN::contains)
-                .ifPresent(codigo -> enviarCupon(reserva));
+    public void notificar(Reserva reserva, Estado anterior, Estado nuevo) {
+        CodigoEstado codigo = nuevo.codigo();
+        if (ESTADOS_QUE_PREMIAN.contains(codigo)) {
+        	enviarCupon(reserva);
+        }
     }
 
     private void enviarCupon(Reserva reserva) {

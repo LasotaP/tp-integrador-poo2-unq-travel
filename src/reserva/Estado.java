@@ -1,6 +1,6 @@
 package reserva;
 
-import servicios.Servicio;
+
 
 public abstract class Estado {
 	
@@ -9,12 +9,9 @@ public abstract class Estado {
 	 OperacionInvalidaException, cada estado sobrescribe solo las permitidas.
 	 */	
 	
-	public abstract String getEstado();
-	
-	
- 	public void validarSiPuedoAgregarOQuitarServicios() {
+ 	public void validarSiPuedoAgregarOQuitarItemReserva() {
 		
-		throw new IllegalArgumentException("No se puede agregar o quitar servicios en el estado" + getEstado());
+		throw new IllegalArgumentException("No se puede agregar o quitar servicios en el estado" + this.codigo());
 	}
 	
 	

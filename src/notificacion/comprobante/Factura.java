@@ -9,8 +9,13 @@ import reserva.ItemReserva;
 
 public class Factura extends Comprobante {
 
-    public Factura(LocalDate fecha, Cliente cliente, List<ItemReserva> servicios,double monto) {
-        super(fecha, cliente, monto);
+    public Factura(String codigo, LocalDate fecha, Cliente cliente, List<ItemReserva> servicios,double monto) {
+    	this.codigo = "FAC" + codigo;
+    	super(fecha, cliente, monto);
+        
+        
     }
+    
+   
 
 }

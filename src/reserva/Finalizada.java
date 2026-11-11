@@ -8,8 +8,5 @@ public class Finalizada extends Estado {
         return CodigoEstado.FINALIZADA;
     }
 
-	@Override
-	public String getEstado() {
-		return "Reserva finalizada";
-	}
+
 }

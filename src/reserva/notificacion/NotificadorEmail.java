@@ -24,13 +24,14 @@ public class NotificadorEmail implements ObservadorReserva {
     }
 
     @Override
-    public void estadoCambiado(Reserva reserva, Estado anterior, Estado nuevo) {
-        Optional.of(nuevo.codigo())
-                .filter(ESTADOS_NOTIFICABLES::contains)
-                .ifPresent(codigo -> notificar(reserva, codigo));
+    public void notificar(Reserva reserva, Estado anterior, Estado nuevo) {
+        CodigoEstado codigo = nuevo.codigo();
+        if (ESTADOS_NOTIFICABLES.contains(codigo)) {
+        	notificarMail(reserva, codigo);
+        }
     }
 
-    private void notificar(Reserva reserva, CodigoEstado codigo) {
+    private void notificarMail(Reserva reserva, CodigoEstado codigo) {
         mailSender.enviarMail(reserva.getCliente().getEmail(),
                 "Estado de tu reserva",
                 "Tu reserva paso a estado " + codigo,
