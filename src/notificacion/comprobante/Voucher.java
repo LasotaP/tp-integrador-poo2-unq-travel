@@ -11,15 +11,13 @@ public class Voucher extends Comprobante {
 	
 	private LocalDate fecFin;
 
-    public Voucher(String codigo, LocalDate fecha, Cliente cliente, List<ItemReserva> itemReserva, double monto, LocalDate fecFin) {
-    	this.codigo = "VOU" + codigo;
-    	super(fecha, cliente, monto);
+    public Voucher(String codigo, LocalDate fecha, Cliente cliente, List<ItemReserva> itemsReserva, double monto, LocalDate fecFin) {
+    	super("VOU" + codigo ,fecha, itemsReserva, cliente, monto);
         this.fecFin = fecFin;
     }
     
-    public Voucher(String codigo, LocalDate fecha, Cliente cliente, List<ItemReserva> itemReserva, double monto) {
-    	this.codigo = "VOU" + codigo;
-    	super(fecha, cliente, monto);
+    public Voucher(String codigo, LocalDate fecha, Cliente cliente, List<ItemReserva> itemsReserva, double monto) {
+    	super("VOU" + codigo, fecha,itemsReserva, cliente ,monto);
     }
 
 	public LocalDate getFecFin() {

@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import java.util.Map;
 
+import servicios.catalogo.CriterioBusqueda;
+
 
 public class ServicioIndividual implements Servicio {
     private String id;
@@ -53,7 +55,7 @@ public class ServicioIndividual implements Servicio {
     public String getDescripcion() {
         return descripcion;
     }
-
+    
     @Override
     public double getPrecioFinal() {
         return precioBase * (1.0 - descuentoPromocional);
@@ -87,6 +89,7 @@ public class ServicioIndividual implements Servicio {
     public void restaurarCupo(LocalDate fecIni, LocalDate fecFin, Integer cantidad) {
     	this.getCupo().restaurar(fecIni, fecFin ,cantidad);
     }
+    
     
     private Cupo getCupo() {
     	return this.cupo;

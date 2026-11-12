@@ -8,15 +8,17 @@ public class PaqueteTuristico implements Servicio {
     private String nombre;
     private String descripcion;
     private double descuentoPromocional; // 0..1
+    private Categoria categoria;
     private List<Servicio> servicios;
 
     // CONSTRUCTOR
-    public PaqueteTuristico (String nombre, String descripcion, double descuentoPromocional){
+    public PaqueteTuristico (String nombre, Categoria categoria, String descripcion, double descuentoPromocional){
         validarTexto(nombre, "nombre");
         validarTexto(descripcion, "descripcion");
         validarFraccion(descuentoPromocional, "descuentoPromocional");
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.categoria = categoria;
         this.descuentoPromocional = descuentoPromocional;
         this.servicios = new ArrayList<>();
     }
@@ -69,6 +71,11 @@ public class PaqueteTuristico implements Servicio {
         servicios.forEach(s -> s.restaurarCupo(fecIni, fecFin, cantidad));
     }
 
+    @Override
+    public Categoria getCategoria() {
+    	return categoria;
+    }
+    
     // HELPERS
     public void addServicio(Servicio servicio) {
         if (servicio == null) {

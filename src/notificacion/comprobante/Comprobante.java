@@ -11,17 +11,17 @@ import reserva.ItemReserva;
 
 public abstract class Comprobante {
 	
-	protected final String codigo;
+	protected String codigo;
     private final LocalDate fecha;
     private final Cliente cliente;
     private final List<ItemReserva> itemsReserva;
     private double monto;
 
 
-    public Comprobante(String codigo, LocalDate fecha, Cliente cliente, double monto) {
+    public Comprobante(String codigo, LocalDate fecha, List<ItemReserva> itemsReserva, Cliente cliente, double monto) {
         this.fecha = Objects.requireNonNull(fecha, "La fecha no puede ser nula");
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
-        this.itemsReserva = new ArrayList<>();
+        this.itemsReserva = itemsReserva;
         this.monto = monto;
         this.codigo = codigo;
         
