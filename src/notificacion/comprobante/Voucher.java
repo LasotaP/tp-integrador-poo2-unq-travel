@@ -3,7 +3,6 @@ package notificacion.comprobante;
 import java.time.LocalDate;
 import java.util.List;
 
-import servicios.Servicio;
 import reserva.Cliente;
 import reserva.ItemReserva;
 
