@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import unqTravel.FilaServicioReservado;
-
 /**
  * ConcreteElement del patrón Visitor (sobre los reportes): contiene los datos del
  * reporte de "Servicios más reservados". Solo guarda información; no sabe cómo se

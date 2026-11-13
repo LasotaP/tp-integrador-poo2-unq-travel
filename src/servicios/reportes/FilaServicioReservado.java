@@ -1,4 +1,4 @@
-package unqTravel;
+package servicios.reportes;
 
 import servicios.Servicio;
 
@@ -33,7 +33,7 @@ public class FilaServicioReservado {
 		return precioPromedio;
 	}
 
-	public void setPrecioPromedio(Double precioPromedio) {
+	private void setPrecioPromedio(Double precioPromedio) {
 		this.precioPromedio = precioPromedio;
 	}
 	

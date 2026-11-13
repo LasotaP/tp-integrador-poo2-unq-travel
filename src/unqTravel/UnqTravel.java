@@ -13,6 +13,7 @@ import reserva.ItemReserva;
 import reserva.Reserva;
 import servicios.Servicio;
 import servicios.catalogo.CatalogoServicios;
+import servicios.reportes.FilaServicioReservado;
 import servicios.reportes.Reporte;
 import servicios.reportes.ReporteExposicionProveedor;
 import servicios.reportes.ReporteMasReservados;

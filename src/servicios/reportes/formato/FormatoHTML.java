@@ -3,7 +3,7 @@ package servicios.reportes.formato;
 import java.util.Locale;
 
 import servicios.reportes.*;
-import unqTravel.FilaServicioReservado;
+import servicios.reportes.FilaServicioReservado;
 
 public class FormatoHTML implements FormatoReporte {
 
