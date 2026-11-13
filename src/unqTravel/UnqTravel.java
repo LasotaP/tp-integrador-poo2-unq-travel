@@ -9,17 +9,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import reserva.ItemReserva;
-import reserva.Reserva;
-import servicios.Servicio;
-import servicios.catalogo.CatalogoServicios;
-import servicios.reportes.FilaServicioReservado;
-import servicios.reportes.Reporte;
-import servicios.reportes.ReporteExposicionProveedor;
-import servicios.reportes.ReporteMasReservados;
-import servicios.reportes.ReporteOcupacionCupo;
-import servicios.reportes.VisitanteOcupacion;
-import servicios.reportes.VisitanteExposicion;
+import unqTravel.catalogo.Servicio;
+import unqTravel.catalogo.busqueda.CatalogoServicios;
+import unqTravel.reportes.FilaServicioReservado;
+import unqTravel.reportes.Reporte;
+import unqTravel.reportes.ReporteExposicionProveedor;
+import unqTravel.reportes.ReporteMasReservados;
+import unqTravel.reportes.ReporteOcupacionCupo;
+import unqTravel.reportes.VisitanteExposicion;
+import unqTravel.reportes.VisitanteOcupacion;
+import unqTravel.reserva.ItemReserva;
+import unqTravel.reserva.Reserva;
 
 
 

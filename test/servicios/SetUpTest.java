@@ -7,6 +7,14 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import unqTravel.catalogo.Cupo;
+import unqTravel.catalogo.PaqueteTuristico;
+import unqTravel.catalogo.ServicioIndividual;
+import unqTravel.catalogo.atributos.TipoBooleano;
+import unqTravel.catalogo.atributos.TipoFecha;
+import unqTravel.catalogo.atributos.TipoNumerico;
+import unqTravel.catalogo.atributos.TipoTexto;
+
 class SetUpTest {
 
 	// SERVICIOS INDIVIDUALES - CREACION

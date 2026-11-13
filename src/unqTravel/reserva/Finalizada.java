@@ -1,0 +1,12 @@
+package unqTravel.reserva;
+
+/** Estado terminal: no permite ninguna operacion. */
+public class Finalizada extends Estado {
+
+    @Override
+    public CodigoEstado codigo() {
+        return CodigoEstado.FINALIZADA;
+    }
+
+
+}
