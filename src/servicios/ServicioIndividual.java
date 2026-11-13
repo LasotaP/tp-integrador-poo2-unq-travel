@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import servicios.catalogo.CriterioBusqueda;
+import servicios.reportes.Visitante;
 
 
 public class ServicioIndividual implements Servicio {
@@ -156,6 +157,8 @@ public class ServicioIndividual implements Servicio {
 	public Direccion getDireccion() {
 		return this.direccion;
 	}
-    	
+	public void aceptar(Visitante visitante) {
+		visitante.visitarServicio(this);
+	}
 }
 

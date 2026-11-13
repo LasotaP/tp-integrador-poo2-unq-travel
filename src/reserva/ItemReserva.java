@@ -46,4 +46,10 @@ public class ItemReserva {
 	public LocalDate getFechaInicio() {
 		return this.fecIni;
 	}
+	
+	public boolean estaEnPeriodo(LocalDate fechaInicio, LocalDate fechaFin) {
+		return getFechaFin().isBefore(fechaInicio) && !getFechaInicio().isAfter(fechaFin);
+	}
+	
+	
 }

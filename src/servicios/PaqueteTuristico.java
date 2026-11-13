@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import servicios.reportes.Visitante;
+
 public class PaqueteTuristico implements Servicio {
     private String nombre;
     private String descripcion;
@@ -110,6 +112,9 @@ public class PaqueteTuristico implements Servicio {
     public boolean validarServicio() {
         return !servicios.isEmpty()
             && servicios.stream().allMatch(Servicio::validarServicio);
+    }
+    public void aceptar(Visitante visitante) {
+    	visitante.visitarPaquete(this);
     }
 
 }

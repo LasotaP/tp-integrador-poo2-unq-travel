@@ -6,6 +6,7 @@ import java.util.*;
 import notificacion.comprobante.Comprobante;
 import reserva.metodoTraslado.MetodoTraslado;
 import servicios.Direccion;
+import servicios.Servicio;
 import servicios.ServicioIndividual;
 
 public class Reserva {
@@ -159,5 +160,18 @@ public class Reserva {
 	public String getNumeroReserva() {
 		return numeroReserva;
 	}
+	
+	public boolean estaPagada() { // Una reserva cuenta como venta si no está cancelada ni pendiente
+		return this.codigoEstado() != CodigoEstado.CANCELADA
+	            && this.codigoEstado() != CodigoEstado.SOLICITUD_PENDIENTE;
+	}
+	
+	public List<ItemReserva> itemsDeReservaEntre(LocalDate fechaInicio, LocalDate fechaFin) {
+		 return this.getItemsReserva().stream()
+				 					  .filter(i -> !i.estaEnPeriodo(fechaInicio,fechaFin))
+				 					  .toList();		
+	}
+	
+	
 	
 }
