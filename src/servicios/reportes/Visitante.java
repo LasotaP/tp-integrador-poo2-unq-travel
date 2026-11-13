@@ -1,8 +1,9 @@
 package servicios.reportes;
 
+import servicios.PaqueteTuristico;
+import servicios.ServicioIndividual;
 
 public interface Visitante {
- public void visitarServicio(Reporte reporte);
- public void visitarPaquete(Reporte reporte);
-
+    void visitarServicio(ServicioIndividual servicio);
+    void visitarPaquete(PaqueteTuristico paquete);
 }

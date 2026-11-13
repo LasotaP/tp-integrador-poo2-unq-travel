@@ -1,6 +1,10 @@
 package servicios.reportes;
 
+/**
+ * Elemento del Visitor. El reporte solo conoce QUE datos recolecta,
+ * nunca COMO se muestran: eso lo decide el FormatoReporte que lo visita.
+ */
 public interface Reporte {
-	public void aceptar(Visitante visitante);
-	
+    String getTitulo();
+    String aceptar(FormatoReporte formato);
 }

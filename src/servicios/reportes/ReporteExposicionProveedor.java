@@ -1,20 +1,27 @@
 package servicios.reportes;
 
-import servicios.PaqueteTuristico;
-import servicios.ServicioIndividual;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class ReporteExposicionProveedor implements Visitante, Reporte {
+public class ReporteExposicionProveedor implements Reporte {
+    private final List<FilaExposicion> filas;
 
-	@Override
-	public void visitarServicio(ServicioIndividual servicio) {
-		// TODO Auto-generated method stub
-		
-	}
+    public ReporteExposicionProveedor(List<FilaExposicion> filas) {
+        this.filas = new ArrayList<>(filas);
+    }
 
-	@Override
-	public void visitarPaquete(PaqueteTuristico paquete) {
-		// TODO Auto-generated method stub
-		
-	}
+    public List<FilaExposicion> getFilas() {
+        return Collections.unmodifiableList(filas);
+    }
 
+    @Override
+    public String getTitulo() {
+        return "Exposición por proveedor";
+    }
+
+    @Override
+    public String aceptar(FormatoReporte formato) {
+        return formato.formatearExposicion(this);
+    }
 }

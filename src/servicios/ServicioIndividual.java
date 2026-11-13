@@ -160,5 +160,13 @@ public class ServicioIndividual implements Servicio {
 	public void aceptar(Visitante visitante) {
 		visitante.visitarServicio(this);
 	}
+	
+	public Integer cupoTotal(LocalDate f)     { 
+		return cupo.getTotal(f); 
+	}
+	
+	public Integer cupoReservado(LocalDate f) { 
+		return cupo.getReservado(f); 
+	}
 }
 

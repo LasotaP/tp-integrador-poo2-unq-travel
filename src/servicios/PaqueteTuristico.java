@@ -113,8 +113,12 @@ public class PaqueteTuristico implements Servicio {
         return !servicios.isEmpty()
             && servicios.stream().allMatch(Servicio::validarServicio);
     }
+    
+    
+    @Override
     public void aceptar(Visitante visitante) {
-    	visitante.visitarPaquete(this);
+        visitante.visitarPaquete(this);
+        servicios.forEach(s -> s.aceptar(visitante));
     }
 
 }

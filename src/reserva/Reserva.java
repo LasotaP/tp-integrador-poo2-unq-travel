@@ -168,7 +168,7 @@ public class Reserva {
 	
 	public List<ItemReserva> itemsDeReservaEntre(LocalDate fechaInicio, LocalDate fechaFin) {
 		 return this.getItemsReserva().stream()
-				 					  .filter(i -> !i.estaEnPeriodo(fechaInicio,fechaFin))
+				 					  .filter(i -> i.estaEnPeriodo(fechaInicio,fechaFin))
 				 					  .toList();		
 	}
 	
