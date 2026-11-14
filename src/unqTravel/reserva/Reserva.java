@@ -19,8 +19,9 @@ public class Reserva {
     private final List<ObservadorReserva> observadores;
     private String numeroReserva;
 	
-	public Reserva(Estado estado, Cliente cliente, Direccion direccion,String numeroReserva) {
+	public Reserva(Estado estado, Cliente cliente, Direccion direccion,String numeroReserva, MetodoTraslado metodo) {
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
+        this.metodoTraslado = Objects.requireNonNull(metodo, "El método de traslado no puede ser nulo");
 		this.estado = new SolicitudPendiente();
 		this.itemsReserva = new ArrayList<ItemReserva>(); 
 		this.comprobantes = new ArrayList<Comprobante>();
@@ -52,8 +53,16 @@ public class Reserva {
 	}
 
 	public void reservarServicios() {
-		this.itemsReserva.stream()
-						 .forEach(i -> i.reservarCupo());
+		List<ItemReserva> reservados = new ArrayList<>();
+	    try {
+	        for (ItemReserva item : itemsReserva) {
+	            item.reservarCupo();
+	            reservados.add(item);
+	        }
+	    } catch (RuntimeException e) {
+	        reservados.forEach(ItemReserva::restaurarCupo);   // deshago solo lo que ya reservé
+	        throw e;
+	    }
 	}
 	
 	public void addComprobante(Comprobante comprobante) {
@@ -120,9 +129,9 @@ public class Reserva {
 						   .sum();
 	}
 	
-	public Integer getCantidadPasajeros(ServicioIndividual servicio) { // Pido la cantidad maxima de pasajeros porque entiendo que es la cantidad que estan de "vacaciones". 
+	public Integer getCantidadPasajeros(ServicioIndividual servicio) { 
 		return getItemsReserva().stream()
-								.filter(i -> i.getServicio() == servicio)
+								.filter(i -> i.getServicio().contiene(servicio))
 								.mapToInt(ItemReserva::getCantidadPasajeros)
 								.sum();
 	}
@@ -146,7 +155,7 @@ public class Reserva {
 		return getCostoReserva() + metodoTraslado.getCostoTraslado(this);
 	}
 	public void setMetodoDeTraslado(MetodoTraslado metodo) {
-		this.metodoTraslado = metodo;
+		this.metodoTraslado = Objects.requireNonNull(metodo, "El método de traslado no puede ser nulo");
 	}
 
 	public String getNumeroReserva() {

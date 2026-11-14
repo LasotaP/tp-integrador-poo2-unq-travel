@@ -8,10 +8,8 @@ public abstract class Estado {
 	 */	
 	
  	public void validarSiPuedoAgregarOQuitarItemReserva() {
-		
-		throw new IllegalArgumentException("No se puede agregar o quitar servicios en el estado" + this.codigo());
+		throw operacionInvalida("No se puede agregar o quitar servicios en el estado" + this.codigo());
 	}
-	
 	
     public void agregarItemReserva(Reserva reserva, ItemReserva itemReserva) {
         throw operacionInvalida("agregar servicios");

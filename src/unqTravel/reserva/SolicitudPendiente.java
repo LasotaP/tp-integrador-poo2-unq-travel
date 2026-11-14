@@ -1,17 +1,7 @@
 package unqTravel.reserva;
 
 public class SolicitudPendiente extends Estado{
-	
-
-	/*@Override
-	public void confirmar(Reserva reserva) {
-		reserva.validarCupo();
-		reserva.decrementarCupo();
-		reserva.setEstado(new ConfirmadaPagada());
 		
-	}
-	*/
-	
     @Override
     public void agregarItemReserva(Reserva reserva, ItemReserva itemReserva) {
         reserva.addItemReserva(itemReserva);

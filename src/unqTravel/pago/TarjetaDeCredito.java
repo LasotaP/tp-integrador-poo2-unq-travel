@@ -12,6 +12,13 @@ public class TarjetaDeCredito extends MetodoDePago{
 	
 	private TarjetaDeCreditoAPI apiTJT;
 	
+	public TarjetaDeCredito(String numeroDeTarjeta, String cvv, LocalDate fechaVencimiento, TarjetaDeCreditoAPI api) {
+		this.numeroDeTarjeta = numeroDeTarjeta;
+		this.cvv = cvv;
+		this.fechaDeVencimiento = fechaVencimiento;
+		this.apiTJT = api;
+	}
+	
 	
 	@Override
 	public void validarDatos(Reserva reserva) {

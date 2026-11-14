@@ -4,6 +4,11 @@ import unqTravel.reserva.Reserva;
 
 public class BilleteraVirtual extends MetodoDePago {
 	private BilleteraVirtualAPI apiBV;
+	
+	public BilleteraVirtual(BilleteraVirtualAPI api) {
+		this.apiBV = api;
+	}
+	
 	@Override
 	public void validarDatos(Reserva reserva) {
 		this.apiBV.validarSaldoSuficiente(reserva.getCostoTotal());

@@ -7,6 +7,12 @@ public class TransferenciaBancaria extends MetodoDePago{
 	private String alias;
 	private TransferenciaBancariaAPI apiTB;
 	
+	public TransferenciaBancaria(String cbu, String alias, TransferenciaBancariaAPI api) {
+		this.CBU = cbu;
+		this.alias = alias;
+		this.apiTB = api;
+	}
+	
 	@Override
 	public void validarDatos(Reserva reserva) {
 		apiTB.validarDatos(CBU, alias);

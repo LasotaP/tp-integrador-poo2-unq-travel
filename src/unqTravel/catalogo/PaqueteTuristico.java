@@ -66,7 +66,16 @@ public class PaqueteTuristico implements Servicio {
         if (!hayCupo(fecIni, fecFin, cantidad)) {
             throw new IllegalArgumentException("No hay cupo suficiente");
         }
-        servicios.forEach(s -> s.reservarCupo(fecIni, fecFin, cantidad));
+        List<Servicio> reservados = new ArrayList<>();
+        try {
+            for (Servicio s : servicios) {
+                s.reservarCupo(fecIni, fecFin, cantidad);
+                reservados.add(s);
+            }
+        } catch (RuntimeException e) {
+            reservados.forEach(s -> s.restaurarCupo(fecIni, fecFin, cantidad));
+            throw e;
+        };
     }
     
     @Override
@@ -84,10 +93,15 @@ public class PaqueteTuristico implements Servicio {
         if (servicio == null) {
             throw new ServicioInvalidoException("El servicio no puede ser nulo");
         }
-        if (servicio == this) {
+        if (servicio.contiene(this)) {
             throw new ServicioInvalidoException("Un paquete no puede contenerse a sí mismo");
         }
         servicios.add(servicio);
+    }
+    
+    @Override
+    public boolean contiene(Servicio servicio) {
+        return this == servicio || servicios.stream().anyMatch(s -> s.contiene(servicio));
     }
 
     // VALIDACION

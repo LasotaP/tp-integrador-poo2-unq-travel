@@ -10,7 +10,6 @@ import java.util.Map;
 import unqTravel.catalogo.atributos.AtributoDinamico;
 import unqTravel.catalogo.atributos.ServicioInvalidoException;
 import unqTravel.reportes.Visitante;
-import unqTravel.servicios.catalogo.CriterioBusqueda;
 
 
 public class ServicioIndividual implements Servicio {
@@ -73,6 +72,12 @@ public class ServicioIndividual implements Servicio {
     public boolean hayCupo(LocalDate fecIni, LocalDate fecFin,Integer cantidad) {
     	return  this.cupo.hayDisponibilidad(fecIni,fecFin,cantidad);
     }
+    
+    @Override
+    public boolean contiene(Servicio servicio) {
+    	return this == servicio;
+    }
+    
     // HELPERS
     
     // Agrega el atributo con su valor. Si ya existe uno con ese nombre lo reemplaza.
