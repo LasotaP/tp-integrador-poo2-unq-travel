@@ -7,16 +7,12 @@ public abstract class Estado {
 	 OperacionInvalidaException, cada estado sobrescribe solo las permitidas.
 	 */	
 	
- 	public void validarSiPuedoAgregarOQuitarItemReserva() {
-		throw operacionInvalida("No se puede agregar o quitar servicios en el estado" + this.codigo());
-	}
-	
     public void agregarItemReserva(Reserva reserva, ItemReserva itemReserva) {
-        throw operacionInvalida("agregar servicios");
+        throw operacionInvalida("No se puede agregar servicios en el estado " + this.codigo());
     }
 
     public void quitarItemReserva(Reserva reserva, ItemReserva itemReserva) {
-        throw operacionInvalida("quitar servicios");
+        throw operacionInvalida("No se puede quitar servicios en el estado " + this.codigo());
     }
 
     public void confirmar(Reserva reserva) {

@@ -4,12 +4,12 @@ public class SolicitudPendiente extends Estado{
 		
     @Override
     public void agregarItemReserva(Reserva reserva, ItemReserva itemReserva) {
-        reserva.addItemReserva(itemReserva);
+        reserva.agregarItem(itemReserva);
     }
 
     @Override
     public void quitarItemReserva(Reserva reserva, ItemReserva itemReserva) {
-        reserva.quitarItemReserva(itemReserva);
+        reserva.quitarItem(itemReserva);
     }
 
     @Override
@@ -28,8 +28,6 @@ public class SolicitudPendiente extends Estado{
         return CodigoEstado.SOLICITUD_PENDIENTE;
     }
     
-    @Override
-    	public void validarSiPuedoAgregarOQuitarItemReserva() {}
 }
 	
 	

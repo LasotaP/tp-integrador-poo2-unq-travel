@@ -31,21 +31,26 @@ public class Reserva {
 	}
 	
 	public void addItemReserva(ItemReserva itemReserva) {
-		estado.validarSiPuedoAgregarOQuitarItemReserva();
-		this.itemsReserva.add(itemReserva);
+		estado.agregarItemReserva(this, itemReserva);
+	}
+	
+	public void agregarItem(ItemReserva item) {
+		this.itemsReserva.add(item);
 	}
 	 
 	public void quitarItemReserva(ItemReserva itemReserva) {
+		estado.quitarItemReserva(this, itemReserva);
+	}
+	
+	public void quitarItem(ItemReserva item) {
 		if(this.itemsReserva.isEmpty()) {
 			throw new IllegalArgumentException("No se pueden quitar servicios: la reserva actual está vacía."); 
 		}
 		
-		if(!this.itemsReserva.contains(itemReserva)) {
+		if(!this.itemsReserva.contains(item)) {
 			throw new IllegalArgumentException("El servicio que intentás remover no se encuentra en esta reserva.");			
 		}
-		
-		estado.validarSiPuedoAgregarOQuitarItemReserva();
-		this.itemsReserva.remove(itemReserva);
+		this.itemsReserva.remove(item);
 	}
 	
 	public void setEstado(Estado nuevoEstado) {

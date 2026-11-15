@@ -32,7 +32,8 @@ public class UnqTravel {
 		this.reservas = new ArrayList<>();
 		this.catalogo = Objects.requireNonNull(catalogo, "El catálogo no puede ser nulo");
 	}
-	  public Reporte generarReporteServiciosMasReservados(LocalDate desde, LocalDate hasta) {
+	  public ReporteMasReservados generarReporteServiciosMasReservados(LocalDate desde, LocalDate hasta) {
+		  validarPeriodo(desde, hasta);
 
 	        // agrupa los ítems vendidos por servicio.
 	        // El resultado es un mapa: cada Servicio apunta a la lista de ItemReserva que lo compraron.
@@ -46,7 +47,8 @@ public class UnqTravel {
 	            // junta todos los ítems de todas las reservas en un único flujo
 	            .flatMap(r -> r.getItemsReserva().stream())
 
-	            // Me quedo solo con los ítems cuya fecha de inicio cae dentro del período [desde, hasta]
+	         // Me quedo solo con los ítems que se solapan con el período [desde, hasta] (ambas fechas inclusive):
+	         // basta con que algún día del ítem caiga dentro del período.
 	            .filter(i -> i.estaEnPeriodo(desde,hasta))
 
 	            // Agrupo los ítems según su servicio
@@ -84,7 +86,8 @@ public class UnqTravel {
 	// Genera el reporte de ocupación y cupo disponible por categoría
 	// para el período [desde, hasta] (ambas fechas inclusive).
 	public ReporteOcupacionCupo generarReporteOcupacion(LocalDate desde, LocalDate hasta) {
-
+		validarPeriodo(desde, hasta);
+		
 	    // Creo el visitor que va a recorrer el catálogo y acumular, por cada categoría,
 	    // el cupo total y el cupo reservado de cada día del período.
 	    VisitanteOcupacion v = new VisitanteOcupacion(desde, hasta);
@@ -102,7 +105,6 @@ public class UnqTravel {
 	// Genera el reporte de exposición por proveedor: qué porcentaje del catálogo
 	// depende de cada operador, para medir el riesgo de concentración.
 	public ReporteExposicionProveedor generarReporteExposicion() {
-
 	    // Visitor que cuenta cuántos servicios individuales aporta cada proveedor.
 	    VisitanteExposicion v = new VisitanteExposicion();
 
@@ -113,6 +115,13 @@ public class UnqTravel {
 	    return new ReporteExposicionProveedor(v.getFilas());
 	}
 	
-	
+	private void validarPeriodo(LocalDate desde, LocalDate hasta) {
+	    if (desde == null || hasta == null) {
+	        throw new IllegalArgumentException("El período es obligatorio");
+	    }
+	    if (hasta.isBefore(desde)) {
+	        throw new IllegalArgumentException("La fecha 'hasta' no puede ser anterior a la fecha 'desde'");
+	    }
+	}
 
 }
