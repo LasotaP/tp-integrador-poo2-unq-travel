@@ -3,7 +3,6 @@ package unqTravel.comprobante;
 import java.time.LocalDate;
 import java.util.List;
 
-import unqTravel.catalogo.Servicio;
 import unqTravel.reserva.Cliente;
 import unqTravel.reserva.ItemReserva;
 

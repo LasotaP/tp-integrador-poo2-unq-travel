@@ -12,7 +12,7 @@ public class CriterioPrecio implements CriterioBusqueda{
 
 	@Override
 	public boolean cumpleCriterio(Servicio servicio) {
-		return servicio.getPrecioFinal() <= precioMaximo;
+		return servicio.getPrecioBase() <= precioMaximo;
 	}
 	
 	

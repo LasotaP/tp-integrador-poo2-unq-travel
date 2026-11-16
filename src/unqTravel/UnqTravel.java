@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import unqTravel.catalogo.Servicio;
 import unqTravel.catalogo.busqueda.CatalogoServicios;
 import unqTravel.reportes.FilaServicioReservado;
-import unqTravel.reportes.Reporte;
 import unqTravel.reportes.ReporteExposicionProveedor;
 import unqTravel.reportes.ReporteMasReservados;
 import unqTravel.reportes.ReporteOcupacionCupo;

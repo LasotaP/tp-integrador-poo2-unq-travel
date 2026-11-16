@@ -2,7 +2,6 @@ package unqTravel.reserva.notificacion;
 
 import java.util.EnumSet;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import unqTravel.reserva.CodigoEstado;

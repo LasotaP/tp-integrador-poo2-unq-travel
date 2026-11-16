@@ -23,6 +23,5 @@ public abstract class MetodoDePago {
 		reserva.addComprobante(new Factura(reserva.getNumeroReserva(), LocalDate.now(),reserva.getCliente(),reserva.getItemsReserva(),reserva.getCostoTotal()));
 		// se guarda en la lista de comprobantes de reserva
 		
-		// CORREGIR LOS PARAMETROS!
 	}
 }

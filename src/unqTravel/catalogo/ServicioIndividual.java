@@ -25,7 +25,7 @@ public class ServicioIndividual implements Servicio {
     private final double descuentoPromocional; // fraccion entre 0 y 1 (0.10 = 10 %)
     
     // CONSTRUCTOR
-    public ServicioIndividual(String id, String nombre, String descripcion, String proveedor, Categoria categoria, double precioBase, 
+    public ServicioIndividual(String id, String nombre, String descripcion, Direccion direccion, String proveedor, Categoria categoria, double precioBase, 
     		Cupo cupo, double descuentoPromocional) {
         validarTexto(id, "id");
         validarTexto(nombre, "nombre");
@@ -39,6 +39,7 @@ public class ServicioIndividual implements Servicio {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.direccion = direccion;
         this.proveedor = proveedor;
         this.categoria = categoria;
         this.cupo = cupo;

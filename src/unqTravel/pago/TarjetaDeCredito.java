@@ -2,7 +2,6 @@ package unqTravel.pago;
 
 import java.time.LocalDate;
 
-import unqTravel.comprobante.Voucher;
 import unqTravel.reserva.Reserva;
 
 public class TarjetaDeCredito extends MetodoDePago{

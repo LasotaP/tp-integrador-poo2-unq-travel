@@ -9,6 +9,7 @@ public class CriterioCategoria implements CriterioBusqueda{
 	
 	public CriterioCategoria(Categoria categoria) {
 		this.categoria = categoria;
+		validar();
 	}
 	
 	@Override
@@ -16,4 +17,10 @@ public class CriterioCategoria implements CriterioBusqueda{
 		return servicio.getCategoria() == categoria;
 	}
 
+	private void validar() {
+		if(categoria == null) {
+			throw new IllegalArgumentException("Categoria invalida");
+		}
+	}
+	
 }

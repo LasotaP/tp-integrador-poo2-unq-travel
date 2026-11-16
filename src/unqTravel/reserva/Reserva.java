@@ -3,8 +3,6 @@ package unqTravel.reserva;
 import java.time.LocalDate;
 import java.util.*;
 
-import unqTravel.catalogo.Direccion;
-import unqTravel.catalogo.Servicio;
 import unqTravel.catalogo.ServicioIndividual;
 import unqTravel.comprobante.Comprobante;
 import unqTravel.reserva.notificacion.ObservadorReserva;
@@ -19,7 +17,7 @@ public class Reserva {
     private final List<ObservadorReserva> observadores;
     private String numeroReserva;
 	
-	public Reserva(Estado estado, Cliente cliente, Direccion direccion,String numeroReserva, MetodoTraslado metodo) {
+	public Reserva(Cliente cliente, String numeroReserva, MetodoTraslado metodo) {
         this.cliente = Objects.requireNonNull(cliente, "El cliente no puede ser nulo");
         this.metodoTraslado = Objects.requireNonNull(metodo, "El método de traslado no puede ser nulo");
 		this.estado = new SolicitudPendiente();
@@ -53,10 +51,7 @@ public class Reserva {
 		this.itemsReserva.remove(item);
 	}
 	
-	public void setEstado(Estado nuevoEstado) {
-		this.estado = nuevoEstado;
-	}
-
+	
 	public void reservarServicios() {
 		List<ItemReserva> reservados = new ArrayList<>();
 	    try {
