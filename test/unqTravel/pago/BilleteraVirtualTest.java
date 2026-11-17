@@ -6,21 +6,16 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import unqTravel.SetUpTest;
 import unqTravel.reserva.Reserva;
 
-class BilleteraVirtualTest {
+class BilleteraVirtualTest extends SetUpTest {
 
     private BilleteraVirtual billetera;
     private BilleteraVirtualAPI apiMock;
     private Reserva reservaMock;
 
-    @BeforeEach
-    void setUp() {
-        apiMock = mock(BilleteraVirtualAPI.class);
-        reservaMock = mock(Reserva.class);
-        
-        billetera = new BilleteraVirtual(apiMock);
-    }
+
 
     @Test
     void testProcesarPagoExitoso() {
