@@ -216,7 +216,9 @@ public abstract class SetUpTest {
         // ---- Reserva ----
         reservaRecepcion = new Reserva(cliente, "1", new TrasladoRecepcion()); // Reserva traslado recepcion
         reservaVip = new Reserva(cliente, "2", new TrasladoVIP(trasladoVipApi)); // Reserva traslado VIP
-        reservaEstandar = new Reserva(cliente, "2", new TrasladoEstandar(plataformaTransporte, autoCompacto)); // Reserva traslado VIP
+        reservaEstandar = new Reserva(cliente, "3", new TrasladoEstandar(plataformaTransporte, autoCompacto)); // Reserva traslado estandar
+        
+
     }
     
 
